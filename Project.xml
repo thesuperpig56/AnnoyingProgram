@@ -21,16 +21,16 @@
 	<window width="1280" height="720" fps="120" background="#000000" hardware="true" vsync="false" />
 
 	<!--HTML5-specific-->
-	<window if="html5" resizable="true" />
+	<!-- <window if="html5" resizable="true" /> -->
 
 	<!--Desktop-specific-->
 	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
 
 	<!--Mobile-specific-->
-	<window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" />
+	<!-- <window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" /> -->
 
 	<!--Switch-specific-->
-	<window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" />
+	<!-- <window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" /> -->
 
 	<!-- ____________________________ Synthex Engine ____________________________ -->
 
@@ -47,12 +47,7 @@
 	<set name="BUILD_DIR" value="export/32bit" if="32bit" />
 
 	<classpath name="source" />
-
-	<!-- _____________________________ Assets | Modules ____________________________ -->
-
-	<!-- This is where the module assets paths should be. The core engine asset paths shouldn't really be changed.         -->
-	<!-- This is made to be universal with all the other modules. Can't be associated with only one module because, issues.-->
-
+	
 	<!-- _____________________________ Assets | Core Engine  ____________________________ -->
 
 	<!-- NOTE: These assets will be embeded in order to not make it difficult.-->

@@ -1,4 +1,4 @@
-package;
+package internal;
 
 @:cppFileCode('#include <windows.h>\n#include <dwmapi.h>\n\n#pragma comment(lib, "Dwmapi")')
 class FlxTransWindow
