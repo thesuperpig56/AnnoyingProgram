@@ -1,4 +1,5 @@
 # AnnoyingProgram
+When compiled, it is called 'winapp.exe' or something like that.
 Literally designed to be annoying but at random intervals.
 
 Not meant to be destructive. Open-source in order to reveal it's code to even show that it ain't bad.
