@@ -119,7 +119,7 @@ class Main extends Sprite
 		addChild(game); // hopefully this child doesn't get bootytickled by errors. o_o
 
 		changeWindowTitle("Loading...", false);
-		changeIcon("assets_core/icons/icon.png"); // lol!
+		changeIcon("assets/icons/256.png"); // lol!
 
 		#if !mobile
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);

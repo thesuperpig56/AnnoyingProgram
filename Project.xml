@@ -58,6 +58,7 @@
 
 	<assets path="assets/fonts" embed='true'/> <!-- This has to always be embeded. No matter what.-->
 	<assets path="assets/images" embed='true'/> <!-- embed type beat -->
+	<assets path="assets/icons" embed='true' />
 	
 	<!-- _______________________________ Libraries ______________________________ -->
 
