@@ -1,5 +1,7 @@
 package;
 
+import menus.SetupScreen;
+import internal.WindowManagement;
 import layout.FPS;
 import layout.Volume;
 import lime.graphics.Image;
@@ -18,7 +20,7 @@ class Main extends Sprite
     var gameTitle:String = "Synthex Engine Core | "; // The name of the game's window. (just as a default thing so when it starts, it has something.)
 	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var gameHeight:Int = 720; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
-	var initialState:Class<FlxState> = menus.TestScreen; // The FlxState the game starts with.
+	var initialState:Class<FlxState> = menus.SetupScreen; // The FlxState the game starts with.
 	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
 	var framerate:Int = 166; // How many frames per second the game should run at.
 	public static var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
@@ -105,7 +107,7 @@ class Main extends Sprite
 		devVersion = false;
 		#end
 		
-		initialState = menus.TestScreen;
+		initialState = SetupScreen;
 
 		#if web
 		trace("Disabling the background since we on the web");
@@ -130,6 +132,10 @@ class Main extends Sprite
 		addChild(volumeGUI); // the most important child for information!
 		volumeGUI.visible = true;
 		#end
+
+		WindowManagement.instance.main();
+
+		// Utilities.setTransparency(true); // lol.
 
 		#if CRASH_HANDLER
 		trace("Crash Handler is now enabled!");

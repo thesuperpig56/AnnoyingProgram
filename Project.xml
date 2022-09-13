@@ -24,7 +24,9 @@
 	<!-- <window if="html5" resizable="true" /> -->
 
 	<!--Desktop-specific-->
-	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false"/>
+	<window if="desktop" orientation="landscape" fullscreen="false" resizable="true" vsync="false" always-on-top="true"/>
+
+	<!-- <window always-on-top="true" />  -->
 
 	<!--Mobile-specific-->
 	<!-- <window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" /> -->
@@ -52,16 +54,17 @@
 
 	<!-- NOTE: These assets will be embeded in order to not make it difficult.-->
 
-	<assets path="assets/"/> <!-- REQUIRED FOR FLIXEL PRELOADER! -->
+	<assets path="assets"/> <!-- REQUIRED FOR FLIXEL PRELOADER! -->
 
 	<assets path="assets/fonts" embed='true'/> <!-- This has to always be embeded. No matter what.-->
+	<assets path="assets/images" embed='true'/> <!-- embed type beat -->
 	
 	<!-- _______________________________ Libraries ______________________________ -->
 
 	<haxelib name="flixel" />
 	<haxedev set='webgl' />
 	<haxelib name="flixel-addons" />
-	<haxelib name="hscript" />
+	<!-- <haxelib name="hscript" /> -->
 	<haxelib name="flixel-ui" />
 	<haxelib name="faxe" if='switch'/>
 	<haxelib name="hxcpp-debug-server" if="cpp"/>
@@ -82,6 +85,6 @@
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	
-	<!-- <icon path="art/gameIcon.png" /> -->
+	<icon path="assets/icons/256.png" />
 	
 </project>

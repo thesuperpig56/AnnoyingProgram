@@ -4,23 +4,39 @@ import internal.FlxTransWindow; // import.
 
 class Utilities
 {
-    public static function setTransparency(bool:Bool)
+    public static function setWindowTransparency(bool:Bool)
     {
-        trace("transparency was set to: " + bool);
+        trace("sdl transparency was set to: " + bool);
         if (bool)
         {
             // Setup the transparency in the window.
-            lime.app.Application.window.opacity = 0;
+            lime.app.Application.current.window.opacity = 0;
         }
         else
         {
             // Disable the transparency in the window.
-            lime.app.Application.window.opacity = 1;
+            lime.app.Application.current.window.opacity = 1;
         }
     }
 
-    public static function createWindow()
+    public static function setBackgroundTransparency(bool:Bool)
     {
-        internal.WindowManagement.createWindow(); // test.
+        trace("bg transparency was set to: " + bool);
+        if (bool)
+        {
+            internal.Transparency.init(true);
+        }
+        else
+        {
+            internal.Transparency.uninit();
+        }
     }
+
+    public static function popupWindow()
+    {
+        // internal.WindowManagement.instance.popupWindow(1280, 720, 500, "Name"); // test.
+        // broken don't use.
+    }
+
+
 }

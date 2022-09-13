@@ -1,6 +1,7 @@
 package menus;
 
-import internal.WindowManagement;
+import flixel.tweens.FlxTween;
+import Utilities;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -13,9 +14,11 @@ import flixel.util.FlxColor;
  * It doesn't do anything else. Just displays a test message.
  * Shouldn't be used or even have a user sent to this FlxState unless something went wrong.
  */
-class TestScreen extends FlxState
+class SetupScreen extends FlxState
 {
 	var bgText:FlxText;
+    var sdlTween:FlxTween;
+    var sdlStartTween:Bool = false;
     
 	override function create()
 	{
@@ -23,26 +26,38 @@ class TestScreen extends FlxState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"Hmm.\nIt appears that the game tried to move\nto another state but since it wasn't set\nyou were moved here instead.\nThe game is soft-locked.", 32);
+			"hiding myself!", 32);
 		txt.setFormat("assets/fonts/SF-Pro.ttf", 32, FlxColor.WHITE, CENTER);
 		txt.screenCenter();
 		add(txt);
 		bgText = txt;
-		Main.changeWindowTitle("Showing the test screen.", false);
+		Main.changeWindowTitle("hiding!", false);
     }
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
-		// if (FlxG.keys.justPressed.G)
-		// {
-		// 	Utilities.popupWindow();
-		// }
-		#if DISABLESOFTLOCK
-		if (FlxG.keys.justPressed.ESCAPE)
-		{
-			trace("SOFTLOCK DISABLED. ESCAPING!");
-			FlxG.switchState(new menus.ModuleLoader());
-		}
-		#end
+        if (!sdlStartTween)
+        {
+            sdlStartTween = true;
+            tweenSDLWindow();
+        }
+        if (lime.app.Application.current.window.opacity == 0)
+        {
+            if (sdlTween.active)
+                sdlTween.cancel();
+            nextState();
+        }
 	}
+
+    function tweenSDLWindow()
+    {
+        sdlTween = FlxTween.tween(lime.app.Application.current.window, {opacity: 0}, 0.5);
+        // sdlTween.onComplete = nextState();
+    }
+
+    function nextState():Void
+    {
+        trace("going to test screen!");
+        FlxG.switchState(new TestScreen());
+    }
 }

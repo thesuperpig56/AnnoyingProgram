@@ -1,6 +1,5 @@
 package menus;
 
-import internal.WindowManagement;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -16,6 +15,7 @@ import flixel.util.FlxColor;
 class TestScreen extends FlxState
 {
 	var bgText:FlxText;
+    var sprite:FlxSprite;
     
 	override function create()
 	{
@@ -28,7 +28,7 @@ class TestScreen extends FlxState
 		txt.screenCenter();
 		add(txt);
 		bgText = txt;
-		Main.changeWindowTitle("Showing the test screen.", false);
+		Main.changeWindowTitle("Application Manager", false);
     }
 
 	override function update(elapsed:Float) {
