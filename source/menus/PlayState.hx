@@ -1,5 +1,7 @@
 package menus;
 
+import flixel.input.keyboard.FlxKey;
+import openfl.events.KeyboardEvent;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -12,10 +14,15 @@ import flixel.util.FlxColor;
  * It doesn't do anything else. Just displays a test message.
  * Shouldn't be used or even have a user sent to this FlxState unless something went wrong.
  */
-class TestScreen extends FlxState
+class PlayState extends FlxState
 {
 	var bgText:FlxText;
     var sprite:FlxSprite;
+
+	var spriteTween:FlxSprite;
+	var spriteAlive:Int = 10;
+	var spriteRunning:Bool = false;
+	
     
 	override function create()
 	{
@@ -23,23 +30,42 @@ class TestScreen extends FlxState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"Hmm.\nIt appears that the game tried to move\nto another state but since it wasn't set\nyou were moved here instead.\nThe game is soft-locked.", 32);
+			"Console:\n\nCmd:> _", 32);
 		txt.setFormat("assets/fonts/SF-Pro.ttf", 32, FlxColor.WHITE, CENTER);
 		txt.screenCenter();
+		txt.visible = false;
 		add(txt);
 		bgText = txt;
 		Main.changeWindowTitle("Application Manager", true);
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
+		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
     }
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
+	}
 
-		#if DISABLESOFTLOCK
-		if (FlxG.keys.justPressed.ESCAPE)
+	private function onKeyPress(event:KeyboardEvent):Void
+	{
+		var eventKey:FlxKey = event.keyCode;
+		trace('Pressed: ' + eventKey);
+	}
+
+	private function onKeyRelease(event:KeyboardEvent):Void
+	{
+		var eventKey:FlxKey = event.keyCode;
+		trace("key released: " + eventKey);
+	}
+
+	// Actual stuff.
+	function showSprite()
+	{
+		if (!spriteRunning)
 		{
-			trace("SOFTLOCK DISABLED. ESCAPING!");
-			FlxG.switchState(new menus.ModuleLoader());
+			trace("Show a random image!");
+			sprite = new FlxSprite();
+			sprite.pixels = Utilities.getImagePixels("assets/images/window" + FlxG.random.int(1, 4) + ".jpg");
+			add(sprite);
 		}
-		#end
 	}
 }

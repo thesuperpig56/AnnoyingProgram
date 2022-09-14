@@ -56,8 +56,8 @@
 
 	<assets path="assets"/> <!-- REQUIRED FOR FLIXEL PRELOADER! -->
 
-	<assets path="assets/fonts" embed='true'/> <!-- This has to always be embeded. No matter what.-->
-	<assets path="assets/images" embed='true'/> <!-- embed type beat -->
+	<assets path="assets/fonts" embed="true"/> <!-- This has to always be embeded. No matter what.-->
+	<assets path="assets/images" include="*.jpg" embed="true"/> <!-- embed type beat -->
 	
 	<!-- _______________________________ Libraries ______________________________ -->
 
@@ -69,6 +69,8 @@
 	<!-- <haxelib name="faxe" if='switch'/> -->
 	<haxelib name="hxcpp-debug-server" if="cpp"/>
 	<haxelib name="hxcpp" if="cpp"/>
+	<haxelib name="systools" if="cpp"/>
+	<ndll name="systools" haxelib="systools" if="cpp" />
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 

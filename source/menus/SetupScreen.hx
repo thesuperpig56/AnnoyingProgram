@@ -26,8 +26,10 @@ class SetupScreen extends FlxState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"hiding myself!", 32);
+			"now hiding!", 32);
 		txt.setFormat("assets/fonts/SF-Pro.ttf", 32, FlxColor.WHITE, CENTER);
+        if (Main.restartedGame)
+            txt.text = "nice try..";
 		txt.screenCenter();
 		add(txt);
 		bgText = txt;

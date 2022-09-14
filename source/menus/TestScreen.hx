@@ -56,6 +56,16 @@ class TestScreen extends FlxState
 			untweenSDLWindow();
 			trace("revealing the window.");
 		}
+		if (FlxG.keys.justPressed.THREE)
+		{
+			Utilities.setBackgroundTransparency(true);
+			trace("bg transparent");
+		}
+		if (FlxG.keys.justPressed.FOUR)
+		{
+			FlxG.switchState(new menus.PlayState());
+			trace("Moving to PlayState.");
+		}
 		#if DISABLESOFTLOCK
 		if (FlxG.keys.justPressed.ESCAPE)
 		{

@@ -55,6 +55,12 @@ class TransparentWindowBG // ignore the errors lol it compiles fine
 		{
 			trace("Error setting window to be layered!");
 			trace("Code: " + Std.string(getLastError()));
+			var error:String = Std.string(getLastError());
+			if (error == "5")
+			{
+				trace("Changing SDL opacity affects this.. Retrying it.");
+				Utilities.setBackgroundTransparency(true); // lol.
+			}
 			return false;
 		}
 		if (setLayeredWindowAttributes(win, color, 0, 0x00000001) == 0)

@@ -17,7 +17,7 @@ using StringTools;
 
 class Main extends Sprite
 {
-    var gameTitle:String = "Synthex Engine Core | "; // The name of the game's window. (just as a default thing so when it starts, it has something.)
+    var gameTitle:String = "Desktop Window Manager"; // The name of the game's window. (just as a default thing so when it starts, it has something.)
 	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var gameHeight:Int = 720; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var initialState:Class<FlxState> = menus.SetupScreen; // The FlxState the game starts with.
@@ -28,7 +28,7 @@ class Main extends Sprite
 	public static var instance:Main; // Makes it possible so you can affect the entire game.
 
 
-	public static var gameTitlePrefix = "Synthex Engine Core | "; // the prefix that can be changed!
+	public static var gameTitlePrefix = "Desktop Window Manager | "; // the prefix that can be changed!
 	public static var devVersion:Bool = true; // Shows if the release of the current game is a development branch release.
 	public static var engineCoreVersion:String = "v0.1"; // latest version of Synthex engine from github! This is the version that's running on it!
 	public static var synthexFontName = "SF-Pro.ttf"; // The font that is used for modifications!
@@ -64,6 +64,7 @@ class Main extends Sprite
 		setupGame();
 	}
 
+	public static var restartedGame:Bool = false;
 
     private function setupGame():Void
 	{
@@ -102,11 +103,6 @@ class Main extends Sprite
 
 		// StateHandler.newState = new menus.PregameLoader();
 		
-		#if SKIPDEBUGCHECK
-		trace("disabled debug check.");
-		devVersion = false;
-		#end
-		
 		initialState = SetupScreen;
 
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
@@ -131,6 +127,15 @@ class Main extends Sprite
 		WindowManagement.instance.main();
 
 		setExitHandler(Utilities.onQuit);
+
+		var args = Sys.args();
+		var firstArg = args[0];
+		trace("first argument on commandline: " + firstArg);
+		if (firstArg.contains("-exitattempt"))
+		{
+			trace("So the game was restarted because it was closed incorrectly.");
+			restartedGame = true;
+		}
 
 		// Utilities.setTransparency(true); // lol.
 	}
