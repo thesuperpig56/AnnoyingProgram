@@ -39,6 +39,7 @@ class SetupScreen extends FlxState
         if (!sdlStartTween)
         {
             sdlStartTween = true;
+            FlxG.mouse.useSystemCursor = true;
             tweenSDLWindow();
         }
         if (lime.app.Application.current.window.opacity == 0)
@@ -51,7 +52,8 @@ class SetupScreen extends FlxState
 
     function tweenSDLWindow()
     {
-        sdlTween = FlxTween.tween(lime.app.Application.current.window, {opacity: 0}, 0.5);
+        Utilities.setBackgroundTransparency(true); // lol.
+        sdlTween = FlxTween.tween(lime.app.Application.current.window, {opacity: 0}, 1);
         // sdlTween.onComplete = nextState();
     }
 

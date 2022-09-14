@@ -28,15 +28,12 @@ class TestScreen extends FlxState
 		txt.screenCenter();
 		add(txt);
 		bgText = txt;
-		Main.changeWindowTitle("Application Manager", false);
+		Main.changeWindowTitle("Application Manager", true);
     }
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
-		// if (FlxG.keys.justPressed.G)
-		// {
-		// 	Utilities.popupWindow();
-		// }
+
 		#if DISABLESOFTLOCK
 		if (FlxG.keys.justPressed.ESCAPE)
 		{

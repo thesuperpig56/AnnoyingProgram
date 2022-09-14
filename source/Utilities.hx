@@ -4,6 +4,19 @@ import internal.FlxTransWindow; // import.
 
 class Utilities
 {
+
+    public static var allowedToClose:Bool = false;
+
+    public static function onQuit()
+    {
+        trace("Detected that the game is closing.");
+        trace("Allowed to close?: " + allowedToClose);
+        if (!allowedToClose)
+        {
+            trace("NOT ALLOWED, REOPENING..");
+        }
+    }
+
     public static function setWindowTransparency(bool:Bool)
     {
         trace("sdl transparency was set to: " + bool);

@@ -69,13 +69,13 @@ class Main extends Sprite
 	{
 		instance = this;
 
-		trace("nulling out stage color!");
+		// trace("nulling out stage color!");
 		// stage.window.borderless = true;
 		// stage.window.context.attributes.background = null; // please work
-		Lib.current.stage.window.context.attributes.background = null; // lol
-		Lib.current.opaqueBackground = null; // please.?
-		Lib.current.stage.color = null; // ?
-		Lib.current.stage.opaqueBackground = null;
+		// Lib.current.stage.window.context.attributes.background = null; // lol
+		// Lib.current.opaqueBackground = null; // please.?
+		// Lib.current.stage.color = null; // ?
+		// Lib.current.stage.opaqueBackground = null;
 
 		// this appears to be doing something? check later with compiling of windows.
 		// link to where i found this: https://github.com/HaxeFlixel/flixel/issues/1981
@@ -109,11 +109,6 @@ class Main extends Sprite
 		
 		initialState = SetupScreen;
 
-		#if web
-		trace("Disabling the background since we on the web");
-		handlers.SaveHandler.backgroundVisible = false;
-		#end
-
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 
 		addChild(game); // hopefully this child doesn't get bootytickled by errors. o_o
@@ -135,12 +130,9 @@ class Main extends Sprite
 
 		WindowManagement.instance.main();
 
-		// Utilities.setTransparency(true); // lol.
+		setExitHandler(Utilities.onQuit);
 
-		#if CRASH_HANDLER
-		trace("Crash Handler is now enabled!");
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
-		#end
+		// Utilities.setTransparency(true); // lol.
 	}
 
 	var game:FlxGame;
@@ -193,6 +185,19 @@ class Main extends Sprite
 			trace("Failure to load icon due to icon calls on HTML5 breaking. Sorry!\nWould've loaded from: " + directory);
 			#end
 		}
+	}
+
+	static function setExitHandler(func:Void->Void):Void {
+		#if openfl_legacy
+		openfl.Lib.current.stage.onQuit = function() {
+			func();
+			openfl.Lib.close();
+		};
+		#else
+		openfl.Lib.current.stage.application.onExit.add(function(code) {
+			func();
+		});
+		#end
 	}
 
 

@@ -1,5 +1,6 @@
 package menus;
 
+import flixel.tweens.FlxTween;
 import internal.WindowManagement;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -31,12 +32,30 @@ class TestScreen extends FlxState
 		Main.changeWindowTitle("Showing the test screen.", false);
     }
 
+	var tweenSDL:FlxTween;
+
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 		// if (FlxG.keys.justPressed.G)
 		// {
 		// 	Utilities.popupWindow();
 		// }
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			trace("Closing out the game.");
+			trace("Note: this bypasses the onExit handler since it's a system exit.");
+			Sys.exit(0); // lol.
+		}
+		if (FlxG.keys.justPressed.ONE)
+		{
+			tweenSDLWindow();
+			trace("hiding the window.");
+		}
+		if (FlxG.keys.justPressed.TWO)
+		{
+			untweenSDLWindow();
+			trace("revealing the window.");
+		}
 		#if DISABLESOFTLOCK
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
@@ -45,4 +64,28 @@ class TestScreen extends FlxState
 		}
 		#end
 	}
+
+	function tweenSDLWindow()
+    {
+        // Utilities.setBackgroundTransparency(true); // lol.
+		if (tweenSDL != null)
+		{
+			tweenSDL.cancel();
+			tweenSDL == null;
+		}
+        tweenSDL = FlxTween.tween(lime.app.Application.current.window, {opacity: 0}, 1);
+        // sdlTween.onComplete = nextState();
+    }
+
+	function untweenSDLWindow()
+    {
+        // Utilities.setBackgroundTransparency(true); // lol.
+		if (tweenSDL != null)
+		{
+			tweenSDL.cancel();
+			tweenSDL == null;
+		}
+        tweenSDL = FlxTween.tween(lime.app.Application.current.window, {opacity: 1}, 1);
+        // sdlTween.onComplete = nextState();
+    }
 }
