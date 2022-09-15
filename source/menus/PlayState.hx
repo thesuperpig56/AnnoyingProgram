@@ -67,7 +67,7 @@ class PlayState extends FlxState
 		super.update(elapsed);
 		if (FlxG.random.bool(1) && !spriteRunning && !disableSpriteSpawn)
 		{
-			if (shouldShow >= 50)
+			if (shouldShow >= 100)
 			{
 				showSprite();
 				trace("show time!");
@@ -76,7 +76,7 @@ class PlayState extends FlxState
 			else
 			{
 				shouldShow += 1;
-				trace("var: " + shouldShow);
+				// trace("var: " + shouldShow);
 			}
 		}
 	}
@@ -85,28 +85,92 @@ class PlayState extends FlxState
 	{
 		var eventKey:FlxKey = event.keyCode;
 		// trace('Pressed: ' + eventKey);
-		switch (eventKey.toString())
+		if (bgText.alpha == 1 && consoleActive)
 		{
-			case 'ESCAPE':
-				if (Main.devVersion)
-				{
-					trace("Developer mode. Closing out the game correctly.");
-					Sys.exit(0);
-				}
-				else
-				{
-					trace("lol.");
-					Sys.exit(0);
-				}
-			case 'GRAVEACCENT':
-				// trace("Pressed console key.");
-				toggleConsole();
-			case 'ZERO':
-				disableSpriteSpawn = !disableSpriteSpawn;
-				trace("disable sprite spawn?: " + disableSpriteSpawn);
-			case 'ONE':
-				trace("Dev Mode: Triggering the sprite to show.");
-				shouldShow = 50;
+			var key = eventKey.toString();
+			var updateText:Bool = true;
+			switch (key)
+			{
+				case 'ZERO':
+					key = "0";
+				case 'ONE':
+					key = "1";
+				case 'TWO':
+					key = "2";
+				case 'THREE':
+					key = "3";
+				case 'FOUR':
+					key = "4";
+				case 'FIVE':
+					key = "5";
+				case 'SIX':
+					key = "6";
+				case 'SEVEN':
+					key = "7";
+				case 'EIGHT':
+					key = "8";
+				case 'NINE':
+					key = "9";
+				// special keys.
+				case 'GRAVEACCENT':
+					trace("Not typing this one, just closing console!");
+					toggleConsole();
+					updateText = false;
+				case 'BACKSPACE':
+					consoleBackspace();
+					key = "";
+				case 'ENTER':
+					consoleEnterKey();
+					updateText = false;
+				case 'SPACE':
+					key = " ";
+				case 'PLUS':
+					key = "=";
+				case 'NUMPADPLUS':
+					key = '+';
+				case 'PERIOD':
+					key = '.';
+			}
+			// trace("Typed key: " + key);
+			if (updateText && !(key.length > 1))
+			{
+				consoleString += key.toLowerCase();
+				consoleUpdateEvent();
+			}
+			else if (!updateText)
+			{
+				// lol.
+			}
+			else if (updateText)
+			{
+				trace("unknown key!");
+			}
+		}
+		else
+		{
+			switch (eventKey.toString())
+			{
+				case 'ESCAPE':
+					if (Main.devVersion)
+					{
+						trace("Developer mode. Closing out the game correctly.");
+						Sys.exit(0);
+					}
+					// else
+					// {
+					// 	trace("lol.");
+					// 	Sys.exit(0);
+					// }
+				case 'GRAVEACCENT':
+					// trace("Pressed console key.");
+					toggleConsole();
+				// case 'ZERO':
+				// 	disableSpriteSpawn = !disableSpriteSpawn;
+				// 	trace("disable sprite spawn?: " + disableSpriteSpawn);
+				// case 'ONE':
+				// 	trace("Dev Mode: Triggering the sprite to show.");
+				// 	shouldShow = 50;
+			}
 		}
 	}
 
@@ -187,6 +251,72 @@ class PlayState extends FlxState
 		consoleString = "";
 		disableSpriteSpawn = true;
 		Main.instance.fpsCounter.visible = true;
+	}
+	
+	function consoleEnterKey()
+	{
+		if (consoleActive)
+		{
+			switch (consoleString)
+			{
+				case "force":
+					trace("forcing sprite");
+					shouldShow = 100;
+					bgText.text = "Console:\n\nCmd:> _\n\nThe sprite will now show.";
+				case "system.exit", "sys.exit", "system.close", "sys.close":
+					trace("closing out the game.");
+					Sys.exit(0);
+				case "test":
+					if (Main.devVersion)
+					{
+						trace("moving to test screen!");
+						FlxG.switchState(new menus.TestScreen());
+					}
+					else
+					{
+						bgText.text = "Console:\n\nCmd:> _\n\nThe test screen is not accessible.";
+					}
+				case "debug = true", "devmode = true", "dev = true", "debug == true", "devmode == true", "dev == true", "debug == true;", "devmode == true;", "dev == true;":
+					bgText.text = "Console:\n\nCmd:> _\n\nEnabling developer mode.";
+					Main.devVersion = true;
+					layout.FPS.fpsPrefix = "DEV PREVIEW\n";
+					trace("Enabled developer mode.");
+				case "debug = false", "devmode = false", "dev = false", "debug == false", "devmode == false", "dev == false", "debug == false;", "devmode == false;", "dev == false;":
+					bgText.text = "Console:\n\nCmd:> _\n\nDisabling developer mode.";
+					Main.devVersion = false;
+					layout.FPS.fpsPrefix = "";
+					trace("Disabled developer mode.");
+				case "":
+					bgText.text = "Console:\n\nCmd:> _\n\nPlease enter a command.";
+				default:
+					bgText.text = "Console:\n\nCmd:> _\n\nInvaild command. Please try again.";
+			}
+			consoleString = "";
+		}
+	}
+
+	function consoleBackspace()
+	{
+		if (consoleActive)
+		{
+			if (consoleString.length == 0)
+			{
+				// trace("nothing was there?");
+			}
+			else
+			{
+				consoleString = consoleString.substring(0, consoleString.length - 1);
+				consoleUpdateEvent();
+			}
+		}
+	}
+
+	function consoleUpdateEvent()
+	{
+		if (consoleActive)
+		{
+			bgText.text = "Console:\n\nCmd:> " + consoleString + "_";
+		}
 	}
 
 	// Timer functions.

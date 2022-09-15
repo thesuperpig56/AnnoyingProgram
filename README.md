@@ -6,6 +6,7 @@ Not meant to be destructive. Open-source in order to reveal it's code to even sh
 
 # Compiling information related to this repository.
 
+Install Haxe with Neko. It's required.
 Use HaxeFlixel with Lime (SDL Opacity pull request).
 **Lime (SDL Opacity pull req): https://github.com/openfl/lime/suites/7791470784/artifacts/328372047**
 
