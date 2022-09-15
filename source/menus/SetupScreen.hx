@@ -29,7 +29,9 @@ class SetupScreen extends FlxState
 			"now hiding!", 32);
 		txt.setFormat("assets/fonts/SF-Pro.ttf", 32, FlxColor.WHITE, CENTER);
         if (Main.restartedGame)
+        {
             txt.text = "nice try..";
+        }
 		txt.screenCenter();
 		add(txt);
 		bgText = txt;
@@ -61,7 +63,15 @@ class SetupScreen extends FlxState
 
     function nextState():Void
     {
-        trace("going to test screen!");
-        FlxG.switchState(new TestScreen());
+        if (Main.devVersion)
+        {
+            trace("going to test screen!");
+            FlxG.switchState(new TestScreen());
+        }
+        else
+        {
+            trace("going to playstate");
+            FlxG.switchState(new menus.PlayState()); // lol.
+        }
     }
 }

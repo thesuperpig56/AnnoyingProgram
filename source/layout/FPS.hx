@@ -27,7 +27,7 @@ class FPS extends TextField
 	**/
 	public var currentFPS(default, null):Int;
 
-	var fpsPrefix:String = "";
+	public static var fpsPrefix:String = "";
 
 	@:noCompletion private var cacheCount:Int;
 	@:noCompletion private var currentTime:Float;
@@ -85,7 +85,7 @@ class FPS extends TextField
 
 		if (currentCount != cacheCount /*&& visible*/)
 		{
-			#if (openfl && cpp)
+			#if (openfl && cpp && DEV)
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text = fpsPrefix + "Ver: " + Main.engineCoreVersion + "\nFPS: " + currentFPS + "\nMemory: " + memoryMegas + " MB";
 			#else

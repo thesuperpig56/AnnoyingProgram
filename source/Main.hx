@@ -22,14 +22,14 @@ class Main extends Sprite
 	var gameHeight:Int = 720; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var initialState:Class<FlxState> = menus.SetupScreen; // The FlxState the game starts with.
 	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
-	var framerate:Int = 166; // How many frames per second the game should run at.
+	var framerate:Int = 60; // How many frames per second the game should run at.
 	public static var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
 	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
 	public static var instance:Main; // Makes it possible so you can affect the entire game.
 
 
 	public static var gameTitlePrefix = "Desktop Window Manager | "; // the prefix that can be changed!
-	public static var devVersion:Bool = true; // Shows if the release of the current game is a development branch release.
+	public static var devVersion:Bool = false; // Shows if the release of the current game is a development branch release.
 	public static var engineCoreVersion:String = "v0.1"; // latest version of Synthex engine from github! This is the version that's running on it!
 	public static var synthexFontName = "SF-Pro.ttf"; // The font that is used for modifications!
 
@@ -69,6 +69,13 @@ class Main extends Sprite
     private function setupGame():Void
 	{
 		instance = this;
+
+		#if DEV
+		devVersion = true;
+		trace("Developer mode was compiled into the window. Automatically changing it!");
+		#else
+		devVersion = false;
+		#end
 
 		// trace("nulling out stage color!");
 		// stage.window.borderless = true;
@@ -121,7 +128,7 @@ class Main extends Sprite
 		// very special child for important work
 		volumeGUI = new Volume(200, 3, 0xFFFFFF); // x: 110
 		addChild(volumeGUI); // the most important child for information!
-		volumeGUI.visible = true;
+		volumeGUI.visible = false; // AnnoyingProgram disabled this.
 		#end
 
 		WindowManagement.instance.main();
@@ -129,20 +136,32 @@ class Main extends Sprite
 		setExitHandler(Utilities.onQuit);
 
 		var args = Sys.args();
-		var firstArg = args[0];
-		trace("first argument on commandline: " + firstArg);
-		if (firstArg.contains("-exitattempt"))
+		for (arg in args)
 		{
-			trace("So the game was restarted because it was closed incorrectly.");
-			restartedGame = true;
+			trace("argument located: " + arg);
+			if (arg.contains("-exitattempt"))
+			{
+				trace("So the game was restarted because it was closed incorrectly.");
+				restartedGame = true;
+			}
+			if (arg.contains("-debug"))
+			{
+				trace("Enabling dev version...");
+				Main.devVersion = true;
+				layout.FPS.fpsPrefix = "DEV PREVIEW\n";
+			}
 		}
+
+		FlxG.autoPause = false;
+		FlxG.console.autoPause = false;
+		FlxG.drawFramerate = 60; // lol.
 
 		// Utilities.setTransparency(true); // lol.
 	}
 
 	var game:FlxGame;
 
-	var fpsCounter:FPS;
+	public var fpsCounter:FPS;
     var volumeGUI:Volume; // lol
 
 	public static function changeWindowTitle(text:String, raw:Bool)

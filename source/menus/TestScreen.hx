@@ -24,7 +24,7 @@ class TestScreen extends FlxState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
-			"Hmm.\nIt appears that the game tried to move\nto another state but since it wasn't set\nyou were moved here instead.\nThe game is soft-locked.", 32);
+			"Hmm.\nThis is just a test screen. Do anything!", 32);
 		txt.setFormat("assets/fonts/SF-Pro.ttf", 32, FlxColor.WHITE, CENTER);
 		txt.screenCenter();
 		add(txt);

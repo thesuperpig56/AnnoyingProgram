@@ -13,12 +13,16 @@ class Utilities
 
     public static function onQuit()
     {
-        trace("Detected that the game is closing.");
+        trace("Detected that the window is closing.");
         trace("Allowed to close?: " + allowedToClose);
         if (!allowedToClose)
         {
             trace("NOT ALLOWED, REOPENING..");
             restart(); // lol.
+        }
+        else
+        {
+            trace("no issues here! letting the window close.");
         }
     }
 
@@ -67,6 +71,8 @@ class Utilities
 		#if cpp
 		var os = Sys.systemName();
 		var args = "-exitattempt";
+        if (Main.devVersion)
+            args += " -debug";
 		var app = "";
 		var workingdir = Sys.getCwd();
 
@@ -84,6 +90,7 @@ class Utilities
 		// Show result:
 		if (result == 0)
 		{
+            trace("Application exited with exit code: 0");
 			FlxG.log.add('SUS');
 			Sys.exit(0);
 		}
