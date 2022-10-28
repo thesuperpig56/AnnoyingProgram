@@ -1,10 +1,12 @@
 package;
 
+import sys.FileSystem;
 import flixel.FlxG;
 import lime.graphics.Image;
 import lime.utils.Assets;
 import openfl.display.BitmapData;
 import internal.FlxTransWindow; // import.
+import Sys;
 
 class Utilities
 {
@@ -58,6 +60,16 @@ class Utilities
     {
         var image = openfl.Assets.getBitmapData(id);
         return image;
+    }
+
+    public static function getRandomImagePixels():BitmapData
+    {
+        var array = FileSystem.readDirectory("assets/images");
+        // pull random shit out of array.
+        var int = array.length;
+        var name:String = array[FlxG.random.int(0, int - 1)]; 
+        var data = getImagePixels(name);
+        return data;
     }
 
     public static function popupWindow()
