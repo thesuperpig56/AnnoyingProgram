@@ -37,8 +37,7 @@ class PlayState extends FlxState
 	var spriteRunning:Bool = false;
 	
     
-	override function create()
-	{
+	override function create() {
         super.create();
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
@@ -65,32 +64,23 @@ class PlayState extends FlxState
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
-		if (FlxG.random.bool(1) && !spriteRunning && !disableSpriteSpawn)
-		{
-			if (shouldShow >= 100)
-			{
+		if (FlxG.random.bool(1) && !spriteRunning && !disableSpriteSpawn) {
+			if (shouldShow >= 100) {
 				showSprite();
 				trace("show time!");
 				shouldShow = 0;
 			}
-			else
-			{
-				shouldShow += 1;
-				// trace("var: " + shouldShow);
-			}
+			else { shouldShow += 1; }
 		}
 	}
 
-	private function onKeyPress(event:KeyboardEvent):Void
-	{
+	private function onKeyPress(event:KeyboardEvent):Void {
 		var eventKey:FlxKey = event.keyCode;
 		// trace('Pressed: ' + eventKey);
-		if (bgText.alpha == 1 && consoleActive)
-		{
+		if (bgText.alpha == 1 && consoleActive) {
 			var key = eventKey.toString();
 			var updateText:Bool = true;
-			switch (key)
-			{
+			switch (key) {
 				case 'ZERO': key = "0";
 				case 'ONE': key = "1";
 				case 'TWO': key = "2";
@@ -118,21 +108,15 @@ class PlayState extends FlxState
 					updateText = false;
 			}
 			// trace("Typed key: " + key);
-			if (updateText && !(key.length > 1))
-			{
+			if (updateText && !(key.length > 1)) {
 				consoleString += key.toLowerCase();
 				consoleUpdateEvent();
 			}
-			else if (!updateText)
-			{
-				// lol.
-			}
+			else if (!updateText) {}
 			else if (updateText) trace("unknown key!");
 		}
-		else
-		{
-			switch (eventKey.toString())
-			{
+		else {
+			switch (eventKey.toString()) {
 				case 'ESCAPE':
 					if (Main.devVersion)
 					{
@@ -144,16 +128,12 @@ class PlayState extends FlxState
 		}
 	}
 
-	private function onKeyRelease(event:KeyboardEvent):Void
-	{
-		var eventKey:FlxKey = event.keyCode;
-	}
+	private function onKeyRelease(event:KeyboardEvent):Void { var eventKey:FlxKey = event.keyCode; }
 
 	// Actual stuff.
 	function showSprite()
 	{
-		if (!spriteRunning)
-		{
+		if (!spriteRunning) {
 			trace("Show a random image!");
 			sprite = new FlxSprite();
 			sprite.pixels = Utilities.getImagePixels("assets/images/window" + FlxG.random.int(1, 4) + ".jpg");
@@ -167,65 +147,52 @@ class PlayState extends FlxState
 		}
 	}
 
-	function hideSprite()
-	{
-		if (spriteRunning)
-		{
+	function hideSprite() {
+		if (spriteRunning) {
 			trace("hide da sprite!");
 			spriteTween = FlxTween.tween(sprite, {alpha: 0}, 1);
 			spriteTween.onComplete = cleanIt;
 		}
 	}
 
-	function toggleConsole()
-	{
-		if (!spriteRunning)
-		{
+	function toggleConsole() {
+		if (!spriteRunning) {
 			trace("Toggled console.");
 			disableSpriteSpawn = true;
-			if (consoleActive)
-			{
-				if (consoleTween != null)
-					consoleTween.cancel();
+			if (consoleActive) {
+				if (consoleTween != null) consoleTween.cancel();
+					
 				consoleTween = FlxTween.tween(bgText, {alpha: 0}, 0.5);
 				consoleTween.onComplete = consoleHideInternal;
-				if (fpsTween != null)
-					fpsTween.cancel();
+				if (fpsTween != null) fpsTween.cancel();
 				fpsTween = FlxTween.tween(Main.instance.fpsCounter, {alpha: 0}, 0.5);
 			}
-			else
-			{
-				if (consoleTween != null)
-					consoleTween.cancel();
+			else {
+				if (consoleTween != null) consoleTween.cancel();
 				consoleTween = FlxTween.tween(bgText, {alpha: 1}, 0.5);
 				consoleTween.onComplete = consoleShowInternal;
-				if (fpsTween != null)
-					fpsTween.cancel();
+				if (fpsTween != null) fpsTween.cancel();
 				fpsTween = FlxTween.tween(Main.instance.fpsCounter, {alpha: 1}, 0.5);
 			}
 		}
 	}
 
-	function consoleHideInternal(tween: FlxTween):Void
-	{
+	function consoleHideInternal(tween: FlxTween):Void {
 		consoleActive = false;
 		consoleString = "";
 		disableSpriteSpawn = false;
 		Main.instance.fpsCounter.visible = true;
 	}
 
-	function consoleShowInternal(tween: FlxTween):Void
-	{
+	function consoleShowInternal(tween: FlxTween):Void {
 		consoleActive = true;
 		consoleString = "";
 		disableSpriteSpawn = true;
 		Main.instance.fpsCounter.visible = true;
 	}
 	
-	function consoleEnterKey()
-	{
-		if (consoleActive)
-		{
+	function consoleEnterKey() {
+		if (consoleActive) {
 			switch (consoleString)
 			{
 				case "force":
@@ -241,10 +208,7 @@ class PlayState extends FlxState
 						trace("moving to test screen!");
 						FlxG.switchState(new menus.TestScreen());
 					}
-					else
-					{
-						bgText.text = "Console:\n\nCmd:> _\n\nThe test screen is not accessible.";
-					}
+					else { bgText.text = "Console:\n\nCmd:> _\n\nThe test screen is not accessible."; }
 				case "debug = true", "devmode = true", "dev = true", "debug == true", "devmode == true", "dev == true", "debug == true;", "devmode == true;", "dev == true;":
 					bgText.text = "Console:\n\nCmd:> _\n\nEnabling developer mode.";
 					Main.devVersion = true;
@@ -255,10 +219,8 @@ class PlayState extends FlxState
 					Main.devVersion = false;
 					layout.FPS.fpsPrefix = "";
 					trace("Disabled developer mode.");
-				case "":
-					bgText.text = "Console:\n\nCmd:> _\n\nPlease enter a command.";
-				default:
-					bgText.text = "Console:\n\nCmd:> _\n\nInvaild command. Please try again.";
+				case "": bgText.text = "Console:\n\nCmd:> _\n\nPlease enter a command.";
+				default: bgText.text = "Console:\n\nCmd:> _\n\nInvaild command. Please try again.";
 			}
 			consoleString = "";
 		}
@@ -266,27 +228,15 @@ class PlayState extends FlxState
 
 	function consoleBackspace()
 	{
-		if (consoleActive)
-		{
-			if (consoleString.length == 0)
-			{
-				// trace("nothing was there?");
-			}
-			else
-			{
+		if (consoleActive) {
+			if (consoleString.length != 0) {
 				consoleString = consoleString.substring(0, consoleString.length - 1);
 				consoleUpdateEvent();
 			}
 		}
 	}
 
-	function consoleUpdateEvent()
-	{
-		if (consoleActive)
-		{
-			bgText.text = "Console:\n\nCmd:> " + consoleString + "_";
-		}
-	}
+	function consoleUpdateEvent() { if (consoleActive) { bgText.text = "Console:\n\nCmd:> " + consoleString + "_"; } }
 
 	// Timer functions.
 	function countdownActiveTimer(tween: FlxTween):Void
