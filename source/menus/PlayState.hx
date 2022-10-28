@@ -91,27 +91,21 @@ class PlayState extends FlxState
 			var updateText:Bool = true;
 			switch (key)
 			{
-				case 'ZERO':
-					key = "0";
-				case 'ONE':
-					key = "1";
-				case 'TWO':
-					key = "2";
-				case 'THREE':
-					key = "3";
-				case 'FOUR':
-					key = "4";
-				case 'FIVE':
-					key = "5";
-				case 'SIX':
-					key = "6";
-				case 'SEVEN':
-					key = "7";
-				case 'EIGHT':
-					key = "8";
-				case 'NINE':
-					key = "9";
-				// special keys.
+				case 'ZERO': key = "0";
+				case 'ONE': key = "1";
+				case 'TWO': key = "2";
+				case 'THREE': key = "3";
+				case 'FOUR': key = "4";
+				case 'FIVE': key = "5";
+				case 'SIX': key = "6";
+				case 'SEVEN': key = "7";
+				case 'EIGHT': key = "8";
+				case 'NINE': key = "9";
+				case 'SPACE': key = " ";
+				case 'PLUS': key = "=";
+				case 'NUMPADPLUS': key = '+';
+				case 'PERIOD': key = '.';
+				// ok this got more than one thing so yea!
 				case 'GRAVEACCENT':
 					trace("Not typing this one, just closing console!");
 					toggleConsole();
@@ -122,14 +116,6 @@ class PlayState extends FlxState
 				case 'ENTER':
 					consoleEnterKey();
 					updateText = false;
-				case 'SPACE':
-					key = " ";
-				case 'PLUS':
-					key = "=";
-				case 'NUMPADPLUS':
-					key = '+';
-				case 'PERIOD':
-					key = '.';
 			}
 			// trace("Typed key: " + key);
 			if (updateText && !(key.length > 1))
@@ -141,10 +127,7 @@ class PlayState extends FlxState
 			{
 				// lol.
 			}
-			else if (updateText)
-			{
-				trace("unknown key!");
-			}
+			else if (updateText) trace("unknown key!");
 		}
 		else
 		{
@@ -156,8 +139,7 @@ class PlayState extends FlxState
 						trace("Developer mode. Closing out the game correctly.");
 						Sys.exit(0);
 					}
-				case 'GRAVEACCENT':
-					toggleConsole();
+				case 'GRAVEACCENT': toggleConsole();
 			}
 		}
 	}
@@ -165,7 +147,6 @@ class PlayState extends FlxState
 	private function onKeyRelease(event:KeyboardEvent):Void
 	{
 		var eventKey:FlxKey = event.keyCode;
-		// trace("key released: " + eventKey);
 	}
 
 	// Actual stuff.
