@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Application Manager" file="winapp" packageName="com.github.thesuperpig56.annoyingprogram" main="Main" version="0.1" company="Synthex Team" />
+	<app title="Application Manager" file="winapp" packageName="com.github.thesuperpig56.annoyingprogram" main="Main" version="2.0" company="HaxeFlixel" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -28,19 +28,6 @@
 
 	<window always-on-top="true" />
 
-	<!--Mobile-specific-->
-	<!-- <window if="mobile" orientation="landscape" fullscreen="true" width="0" height="0" /> -->
-
-	<!--Switch-specific-->
-	<!-- <window if="switch" orientation="landscape" fullscreen="true" width="0" height="0" resizable="true" /> -->
-
-	<!-- ____________________________ Synthex Engine ____________________________ -->
-
-	<!-- <window borderless="true" if="BETA"/>
-	<window background="transparent" if="BETA"/> -->
-
-	<!-- <define name="BETA" if="hl" /> -->
-
 	<!-- _____________________________ Path Settings ____________________________ -->
 
 	<set name="BUILD_DIR" value="export/debug" if="debug" />
@@ -65,9 +52,7 @@
 	<haxelib name="flixel" />
 	<haxedev set='webgl' />
 	<haxelib name="flixel-addons" />
-	<!-- <haxelib name="hscript" /> -->
 	<haxelib name="flixel-ui" />
-	<!-- <haxelib name="faxe" if='switch'/> -->
 	<haxelib name="hxcpp-debug-server" if="cpp"/>
 	<haxelib name="hxcpp" if="cpp"/>
 	<haxelib name="systools" if="cpp"/>
@@ -100,18 +85,5 @@
 	<icon path="icons/256.png" size="512" />
 	<icon path="icons/256.png" size="768" />
 	<icon path="icons/256.png" />
-
-	<!-- <icon path="icons/icon.ico" size="16" />
-	<icon path="icons/icon.ico" size="24" />
-	<icon path="icons/icon.ico" size="32" />
-	<icon path="icons/icon.ico" size="40" />
-	<icon path="icons/icon.ico" size="48" />
-	<icon path="icons/icon.ico" size="64" />
-	<icon path="icons/icon.ico" size="96" />
-	<icon path="icons/icon.ico" size="128" />
-	<icon path="icons/icon.ico" size="256" />
-	<icon path="icons/icon.ico" size="512" />
-	<icon path="icons/icon.ico" size="768" />
-	<icon path="icons/icon.ico" /> -->
 	
 </project>
