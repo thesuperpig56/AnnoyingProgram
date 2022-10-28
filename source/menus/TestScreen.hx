@@ -36,10 +36,6 @@ class TestScreen extends FlxState
 
 	override function update(elapsed:Float) {
 		super.update(elapsed);
-		// if (FlxG.keys.justPressed.G)
-		// {
-		// 	Utilities.popupWindow();
-		// }
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
 			trace("Closing out the game.");

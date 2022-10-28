@@ -1,4 +1,4 @@
-# AnnoyingProgram (Version 2)
+# AnnoyingProgram (Version 2) [v0.2]
 When compiled, it is called 'winapp.exe' or something like that.
 Literally designed to be annoying but at random intervals.
 

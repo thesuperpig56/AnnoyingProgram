@@ -13,9 +13,9 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
 /**
- * This is just a FlxState which only shows a test message.
- * It doesn't do anything else. Just displays a test message.
- * Shouldn't be used or even have a user sent to this FlxState unless something went wrong.
+ * This is the FlxState that is the main state that the window is on.
+ * I don't like how this was one line long so I'm adding random lines to this.
+ * Okay, I like this size so I'll stop now.
  */
 class PlayState extends FlxState
 {
@@ -156,20 +156,8 @@ class PlayState extends FlxState
 						trace("Developer mode. Closing out the game correctly.");
 						Sys.exit(0);
 					}
-					// else
-					// {
-					// 	trace("lol.");
-					// 	Sys.exit(0);
-					// }
 				case 'GRAVEACCENT':
-					// trace("Pressed console key.");
 					toggleConsole();
-				// case 'ZERO':
-				// 	disableSpriteSpawn = !disableSpriteSpawn;
-				// 	trace("disable sprite spawn?: " + disableSpriteSpawn);
-				// case 'ONE':
-				// 	trace("Dev Mode: Triggering the sprite to show.");
-				// 	shouldShow = 50;
 			}
 		}
 	}

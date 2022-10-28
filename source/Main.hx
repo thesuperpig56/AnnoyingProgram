@@ -1,7 +1,6 @@
 package;
 
 import menus.SetupScreen;
-import internal.WindowManagement;
 import layout.FPS;
 import layout.Volume;
 import lime.graphics.Image;
@@ -130,8 +129,6 @@ class Main extends Sprite
 		addChild(volumeGUI); // the most important child for information!
 		volumeGUI.visible = false; // AnnoyingProgram disabled this.
 		#end
-
-		WindowManagement.instance.main();
 
 		setExitHandler(Utilities.onQuit);
 
