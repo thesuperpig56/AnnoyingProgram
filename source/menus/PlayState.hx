@@ -133,6 +133,7 @@ class PlayState extends FlxState
 			sprite = new FlxSprite();
 			sprite.pixels = Utilities.getRandomImagePixels();
 			sprite.alpha = 0;
+			sprite.setGraphicSize(Std.int(sprite.width * 0.7), Std.int(sprite.height * 0.7));
 			sprite.screenCenter();
 			Utilities.setBackgroundTransparency(true); // fuck.
 			add(sprite);

@@ -72,11 +72,7 @@ class FPS extends TextField
 	{
 		currentTime += deltaTime;
 		times.push(currentTime);
-
-		while (times[0] < currentTime - 1000)
-		{
-			times.shift();
-		}
+		while (times[0] < currentTime - 1000) times.shift();
 
 		var currentCount = times.length;
 		currentFPS = Math.round((currentCount + cacheCount) / 2);
@@ -85,14 +81,13 @@ class FPS extends TextField
 
 		if (currentCount != cacheCount /*&& visible*/)
 		{
-			#if (openfl && cpp && DEV)
+			#if (openfl && cpp)
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text = fpsPrefix + "Ver: " + Main.engineCoreVersion + "\nFPS: " + currentFPS + "\nMemory: " + memoryMegas + " MB";
 			#else
 			text = fpsPrefix + "Ver: " + Main.engineCoreVersion + "\nFPS: " + currentFPS;
 			#end
 		}
-
 		cacheCount = currentCount;
 	}
 }
