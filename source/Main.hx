@@ -29,7 +29,7 @@ class Main extends Sprite
 
 	public static var gameTitlePrefix = "Desktop Window Manager | "; // the prefix that can be changed!
 	public static var devVersion:Bool = false; // Shows if the release of the current game is a development branch release.
-	public static var engineCoreVersion:String = "v0.2"; // This isn't running on a engine anymore.
+	public static var engineCoreVersion:String = "v0.2b"; // This isn't running on a engine anymore.
 	public static var synthexFontName = "SF-Pro.ttf"; // The font that is used for modifications!
 
 
@@ -95,17 +95,17 @@ class Main extends Sprite
 		var args = Sys.args();
 		for (arg in args)
 		{
-			trace("argument located: " + arg);
-			if (arg.contains("-exitattempt"))
+			switch (arg.toString())
 			{
-				trace("So the game was restarted because it was closed incorrectly.");
-				restartedGame = true;
-			}
-			if (arg.contains("-debug"))
-			{
-				trace("Enabling dev version...");
-				Main.devVersion = true;
-				layout.FPS.fpsPrefix = "DEV PREVIEW\n";
+				case "-exitattempt":
+					trace("So the game was restarted because it was closed incorrectly.");
+					restartedGame = true;
+				case "-debug":
+					trace("Enabling dev version...");
+					Main.devVersion = true;
+					layout.FPS.fpsPrefix = "DEV PREVIEW\n";
+				case "-livereload":
+					trace("Why would you live reload when it's not supported!");
 			}
 		}
 

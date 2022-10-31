@@ -108,22 +108,16 @@ class PlayState extends FlxState
 					consoleEnterKey();
 					updateText = false;
 			}
-			// trace("Typed key: " + key);
 			if (updateText && !(key.length > 1)) {
 				consoleString += key.toLowerCase();
 				consoleUpdateEvent();
 			}
 			else if (!updateText) {}
-			else if (updateText) trace("unknown key!");
+			else if (updateText) trace('unknown key. key: [${key}]');
 		}
 		else {
 			switch (eventKey.toString()) {
-				case 'ESCAPE':
-					if (Main.devVersion)
-					{
-						trace("Developer mode. Closing out the game correctly.");
-						Sys.exit(0);
-					}
+				case 'ESCAPE': if (Main.devVersion) { Sys.exit(0); }
 				case 'GRAVEACCENT': toggleConsole();
 			}
 		}
