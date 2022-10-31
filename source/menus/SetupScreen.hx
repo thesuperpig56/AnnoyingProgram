@@ -23,7 +23,7 @@ class SetupScreen extends FlxState
 	override function create()
 	{
         super.create();
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(1, 1, 1));
 		add(bg);
         var text:String = "bye bye!";
         if (Main.restartedGame) text = "nice try..";
@@ -44,12 +44,6 @@ class SetupScreen extends FlxState
             FlxG.mouse.useSystemCursor = true;
             tweenSDLWindow();
         }
-        // if (lime.app.Application.current.window.opacity == 0)
-        // {
-        //     if (sdlTween.active)
-        //         sdlTween.cancel();
-        //     nextState();
-        // }
 	}
 
     function tweenSDLWindow()
@@ -61,15 +55,7 @@ class SetupScreen extends FlxState
 
     function nextState(tween:FlxTween):Void
     {
-        if (Main.devVersion)
-        {
-            trace("going to test screen!");
-            FlxG.switchState(new TestScreen());
-        }
-        else
-        {
-            trace("going to playstate");
-            FlxG.switchState(new menus.PlayState()); // lol.
-        }
+        if (Main.devVersion) FlxG.switchState(new TestScreen());
+        else FlxG.switchState(new menus.PlayState()); // lol.
     }
 }

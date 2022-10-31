@@ -17,60 +17,36 @@ class Utilities
     {
         trace("Detected that the window is closing.");
         trace("Allowed to close?: " + allowedToClose);
-        if (!allowedToClose)
-        {
-            trace("NOT ALLOWED, REOPENING..");
-            restart(); // lol.
-        }
-        else
-        {
-            trace("no issues here! letting the window close.");
-        }
+        if (!allowedToClose) restart(); // lol.
+        else trace("no issues here! letting the window close.");
     }
 
     public static function setWindowTransparency(bool:Bool)
     {
         trace("sdl transparency was set to: " + bool);
-        if (bool)
-        {
-            // Setup the transparency in the window.
-            lime.app.Application.current.window.opacity = 0;
-        }
-        else
-        {
-            // Disable the transparency in the window.
-            lime.app.Application.current.window.opacity = 1;
-        }
+        if (bool) lime.app.Application.current.window.opacity = 0;
+        else lime.app.Application.current.window.opacity = 1;
     }
 
     public static function setBackgroundTransparency(bool:Bool)
     {
         trace("bg transparency was set to: " + bool);
-        if (bool)
-        {
-            internal.Transparency.init(true);
-        }
-        else
-        {
-            internal.Transparency.uninit();
-        }
+        if (bool) internal.FlxTransWindow.getWindowsTransparent();
+        else internal.FlxTransWindow.getWindowsbackward();
     }
 
-    public static function getImagePixels(id:String):BitmapData
-    {
-        var image = openfl.Assets.getBitmapData(id);
-        return image;
-    }
+    public static function getImagePixels(id:String):BitmapData { return openfl.Assets.getBitmapData(id); }
 
     public static function getRandomImagePixels():BitmapData
     {
         var array = FileSystem.readDirectory("assets/images");
         // pull random shit out of array.
         var int = array.length;
-        var name:String = array[FlxG.random.int(0, int - 1)]; 
-        var data = getImagePixels(name);
+        var data = getImagePixels("assets/images/" + array[FlxG.random.int(0, int - 1)]);
         return data;
     }
+
+    public static function getAllImagesArray():Array<String> { return FileSystem.readDirectory("assets/images"); }
 
     public static function popupWindow()
     {
@@ -83,8 +59,7 @@ class Utilities
 		#if cpp
 		var os = Sys.systemName();
 		var args = "-exitattempt";
-        if (Main.devVersion)
-            args += " -debug";
+        if (Main.devVersion) args += " -debug";
 		var app = "";
 		var workingdir = Sys.getCwd();
 
@@ -100,14 +75,8 @@ class Utilities
 			, false // do not wait for the application to terminate
 		);
 		// Show result:
-		if (result == 0)
-		{
-            trace("Application exited with exit code: 0");
-			FlxG.log.add('SUS');
-			Sys.exit(0);
-		}
-		else
-			throw "Failure to restart Desktop Window Manager";
+		if (result == 0) Sys.exit(0);
+		else throw "Failure to restart Desktop Window Manager";
 		#end
 	}
 

@@ -21,7 +21,7 @@ class TestScreen extends FlxState
 	override function create()
 	{
         super.create();
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(1, 1, 1));
 		add(bg);
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
 			"Hmm.\nThis is just a test screen. Do anything!", 32);
@@ -62,36 +62,17 @@ class TestScreen extends FlxState
 			FlxG.switchState(new menus.PlayState());
 			trace("Moving to PlayState.");
 		}
-		#if DISABLESOFTLOCK
-		if (FlxG.keys.justPressed.ESCAPE)
-		{
-			trace("SOFTLOCK DISABLED. ESCAPING!");
-			FlxG.switchState(new menus.ModuleLoader());
-		}
-		#end
 	}
 
 	function tweenSDLWindow()
     {
-        // Utilities.setBackgroundTransparency(true); // lol.
-		if (tweenSDL != null)
-		{
-			tweenSDL.cancel();
-			tweenSDL == null;
-		}
+		if (tweenSDL != null) tweenSDL.cancel();
         tweenSDL = FlxTween.tween(lime.app.Application.current.window, {opacity: 0}, 1);
-        // sdlTween.onComplete = nextState();
     }
 
 	function untweenSDLWindow()
     {
-        // Utilities.setBackgroundTransparency(true); // lol.
-		if (tweenSDL != null)
-		{
-			tweenSDL.cancel();
-			tweenSDL == null;
-		}
+		if (tweenSDL != null) tweenSDL.cancel();
         tweenSDL = FlxTween.tween(lime.app.Application.current.window, {opacity: 1}, 1);
-        // sdlTween.onComplete = nextState();
     }
 }

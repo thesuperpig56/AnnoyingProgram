@@ -29,37 +29,23 @@ class Main extends Sprite
 
 	public static var gameTitlePrefix = "Desktop Window Manager | "; // the prefix that can be changed!
 	public static var devVersion:Bool = false; // Shows if the release of the current game is a development branch release.
-	public static var engineCoreVersion:String = "v0.1"; // latest version of Synthex engine from github! This is the version that's running on it!
+	public static var engineCoreVersion:String = "v0.2"; // This isn't running on a engine anymore.
 	public static var synthexFontName = "SF-Pro.ttf"; // The font that is used for modifications!
 
 
-    public static function main():Void
-	{
-		Lib.current.addChild(new Main()); // its like the most important child because if its not used, it will be raped by errors.
-	}
-
+    public static function main():Void { Lib.current.addChild(new Main()); }
 
     public function new()
 	{
 		super();
 
-		if (stage != null)
-		{
-			init();
-		}
-		else
-		{
-			addEventListener(Event.ADDED_TO_STAGE, init);
-		}
+		if (stage != null) init();
+		else addEventListener(Event.ADDED_TO_STAGE, init);
 	}
 
     private function init(?E:Event):Void
 	{
-		if (hasEventListener(Event.ADDED_TO_STAGE))
-		{
-			removeEventListener(Event.ADDED_TO_STAGE, init);
-		}
-
+		if (hasEventListener(Event.ADDED_TO_STAGE)) removeEventListener(Event.ADDED_TO_STAGE, init);
 		setupGame();
 	}
 
@@ -68,36 +54,15 @@ class Main extends Sprite
     private function setupGame():Void
 	{
 		instance = this;
-
 		#if DEV
 		devVersion = true;
 		trace("Developer mode was compiled into the window. Automatically changing it!");
 		#else
 		devVersion = false;
 		#end
-
-		// trace("nulling out stage color!");
-		// stage.window.borderless = true;
-		// stage.window.context.attributes.background = null; // please work
-		// Lib.current.stage.window.context.attributes.background = null; // lol
-		// Lib.current.opaqueBackground = null; // please.?
-		// Lib.current.stage.color = null; // ?
-		// Lib.current.stage.opaqueBackground = null;
-
-		// this appears to be doing something? check later with compiling of windows.
-		// link to where i found this: https://github.com/HaxeFlixel/flixel/issues/1981
-		
-		// FlxG.camera.bgColor = FlxColor.TRANSPARENT; // fuck please work i beg of u
-
-		// #if cpp
-		// trace("Loading transparency addon..");
-		// Transparency.init(); // lol
-		// #end
-		// Transparency.init();
-
+		// HaxeFlixel creation into the OpenFL window.
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
-
 		if (zoom == -1)
 		{
 			var ratioX:Float = stageWidth / gameWidth;
@@ -106,23 +71,18 @@ class Main extends Sprite
 			gameWidth = Math.ceil(stageWidth / zoom);
 			gameHeight = Math.ceil(stageHeight / zoom);
 		}
-
-		// StateHandler.newState = new menus.PregameLoader();
-		
 		initialState = SetupScreen;
-
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
+		addChild(game);
 
-		addChild(game); // hopefully this child doesn't get bootytickled by errors. o_o
-
+		// HaxeFlixel was loaded in correctly, start making changes!
 		changeWindowTitle("Loading...", false);
 		changeIcon("assets/icons/256.png"); // lol!
 
 		#if !mobile
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsCounter); // the most important child for information!
-		setFPSVisibility(true);
-		// toggleFPS(FlxG.save.data.fps);
+		setFPSVisibility(false); // not important ill change it later.
 
 		// very special child for important work
 		volumeGUI = new Volume(200, 3, 0xFFFFFF); // x: 110
@@ -152,8 +112,6 @@ class Main extends Sprite
 		FlxG.autoPause = false;
 		FlxG.console.autoPause = false;
 		FlxG.drawFramerate = 60; // lol.
-
-		// Utilities.setTransparency(true); // lol.
 	}
 
 	var game:FlxGame;
@@ -163,23 +121,11 @@ class Main extends Sprite
 
 	public static function changeWindowTitle(text:String, raw:Bool)
 	{
-		// trace('Attempting to change window title to: ' + text);
-        var disguiseMode:Bool = false; // just here.
-		if (disguiseMode)
-		{
-			// lime.app.Application.current.window.title = "GoGuardian Teacher - Enroll";
-		}
-		else
-		{
-			if (raw)
-				lime.app.Application.current.window.title = text;
-			else
-				lime.app.Application.current.window.title = gameTitlePrefix + text;
-		}
+		if (raw) lime.app.Application.current.window.title = text;
+		else lime.app.Application.current.window.title = gameTitlePrefix + text;
 	}
 
 	static var iconDirectorySet:String = "nothing";
-
 
 	public static function changeIcon(directory:String)
 	{
@@ -192,10 +138,7 @@ class Main extends Sprite
 		}
 		// continue
 		var icon:Image = Image.fromFile(pullPath);
-		if (icon == null)
-		{
-			trace("INVAILD IMAGE DIRECTORY, PLEASE TRY AGAIN WITH A VAILD DIRECTORY.");
-		}
+		if (icon == null) trace("INVAILD IMAGE DIRECTORY, PLEASE TRY AGAIN WITH A VAILD DIRECTORY.");
 		else
 		{
 			iconDirectorySet = directory; // make sure the icon is saved so it doesnt keep spamming icon.
@@ -224,29 +167,9 @@ class Main extends Sprite
 
 	// UNNECCESSARY CODE SHIT
 
-	public function setFPSVisibility(fpsEnabled:Bool):Void {
-		fpsCounter.visible = fpsEnabled;
-	}
-
-	public function changeFPSColor(color:FlxColor)
-	{
-		fpsCounter.textColor = color;
-	}
-
-	public static function setFPSCap(cap:Float) // made static
-	{
-		openfl.Lib.current.stage.frameRate = cap;
-	}
-
-	public function getFPSCap():Float
-	{
-		return openfl.Lib.current.stage.frameRate;
-	}
-
-	public function getFPS():Float
-	{
-		return fpsCounter.currentFPS;
-	}
-
-
+	public function setFPSVisibility(fpsEnabled:Bool):Void { fpsCounter.visible = fpsEnabled; }
+	public function changeFPSColor(color:FlxColor) { fpsCounter.textColor = color; }
+	public static function setFPSCap(cap:Float) { openfl.Lib.current.stage.frameRate = cap; } // made static
+	public function getFPSCap():Float { return openfl.Lib.current.stage.frameRate; }
+	public function getFPS():Float { return fpsCounter.currentFPS; }
 }

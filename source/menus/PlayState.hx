@@ -39,8 +39,9 @@ class PlayState extends FlxState
     
 	override function create() {
         super.create();
-		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(1, 1, 1));
 		add(bg);
+		Utilities.setBackgroundTransparency(true);
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
 			"Console:\n\nCmd:> _", 32);
 		txt.setFormat("assets/fonts/SF-Pro.ttf", 32, FlxColor.WHITE, CENTER);
@@ -52,12 +53,12 @@ class PlayState extends FlxState
 		Main.changeWindowTitle("Application Manager", true);
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
-		Utilities.setBackgroundTransparency(true); // fuck.
 		trace("hide bg!");
 
 		// fps
 		Main.instance.fpsCounter.visible = true;
 		Main.instance.fpsCounter.alpha = 0;
+		openfl.Lib.current.stage.window.borderless = true;
     }
 
 	var shouldShow:Int = 0;
@@ -136,7 +137,7 @@ class PlayState extends FlxState
 		if (!spriteRunning) {
 			trace("Show a random image!");
 			sprite = new FlxSprite();
-			sprite.pixels = Utilities.getImagePixels("assets/images/window" + FlxG.random.int(1, 4) + ".jpg");
+			sprite.pixels = Utilities.getRandomImagePixels();
 			sprite.alpha = 0;
 			sprite.screenCenter();
 			Utilities.setBackgroundTransparency(true); // fuck.
@@ -203,11 +204,7 @@ class PlayState extends FlxState
 					trace("closing out the game.");
 					Sys.exit(0);
 				case "test":
-					if (Main.devVersion)
-					{
-						trace("moving to test screen!");
-						FlxG.switchState(new menus.TestScreen());
-					}
+					if (Main.devVersion) FlxG.switchState(new menus.TestScreen());
 					else { bgText.text = "Console:\n\nCmd:> _\n\nThe test screen is not accessible."; }
 				case "debug = true", "devmode = true", "dev = true", "debug == true", "devmode == true", "dev == true", "debug == true;", "devmode == true;", "dev == true;":
 					bgText.text = "Console:\n\nCmd:> _\n\nEnabling developer mode.";
@@ -219,6 +216,7 @@ class PlayState extends FlxState
 					Main.devVersion = false;
 					layout.FPS.fpsPrefix = "";
 					trace("Disabled developer mode.");
+				case "array.print": trace(Utilities.getAllImagesArray());
 				case "": bgText.text = "Console:\n\nCmd:> _\n\nPlease enter a command.";
 				default: bgText.text = "Console:\n\nCmd:> _\n\nInvaild command. Please try again.";
 			}
@@ -239,17 +237,9 @@ class PlayState extends FlxState
 	function consoleUpdateEvent() { if (consoleActive) { bgText.text = "Console:\n\nCmd:> " + consoleString + "_"; } }
 
 	// Timer functions.
-	function countdownActiveTimer(tween: FlxTween):Void
-	{
-		trace("counting down active timer thing!");
-		timer = new FlxTimer().start(5, hideSpriteForTimer);
-	}
+	function countdownActiveTimer(tween: FlxTween):Void { timer = new FlxTimer().start(5, hideSpriteForTimer); }
 
-	function hideSpriteForTimer(timer: FlxTimer):Void
-	{
-		trace("timer done!");
-		hideSprite();
-	}
+	function hideSpriteForTimer(timer: FlxTimer):Void { hideSprite(); }
 
 	function cleanIt(tween: FlxTween):Void
 	{
