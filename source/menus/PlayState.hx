@@ -11,6 +11,9 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import internal.Transparency;
 import openfl.events.KeyboardEvent;
+import sys.FileSystem;
+
+using StringTools;
 
 /**
  * This is the FlxState that is the main state that the window is on.
@@ -35,10 +38,15 @@ class PlayState extends FlxState
 	var spriteTween:FlxTween;
 	var spriteAlive:Int = 10;
 	var spriteRunning:Bool = false;
-	
+
+	// Lua required variables.
+	public static var instance:PlayState;
+	public var variables:Map<String, Dynamic> = new Map();
+	public var luaArray:Array<internal.LuaScript> = []; // hehe haha.
     
 	override function create() {
         super.create();
+		instance = this; // Lua.
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(1, 1, 1));
 		add(bg);
 		Utilities.setBackgroundTransparency(true);
@@ -59,6 +67,8 @@ class PlayState extends FlxState
 		Main.instance.fpsCounter.visible = true;
 		Main.instance.fpsCounter.alpha = 0;
 		openfl.Lib.current.stage.window.borderless = true;
+
+		initLua();
     }
 
 	var shouldShow:Int = 0;
@@ -73,7 +83,10 @@ class PlayState extends FlxState
 			}
 			else { shouldShow += 1; }
 		}
+		for (lua in luaArray) lua.call('onUpdate', []);
 	}
+
+	private function initLua() { for (file in FileSystem.readDirectory("assets/scripts")) { if (file.endsWith(".lua")) { luaArray.push(new internal.LuaScript("assets/scripts/" + file));} } }
 
 	private function onKeyPress(event:KeyboardEvent):Void {
 		var eventKey:FlxKey = event.keyCode;

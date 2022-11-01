@@ -55,7 +55,9 @@
 	<haxelib name="hxcpp-debug-server" if="cpp"/>
 	<haxelib name="hxcpp" if="cpp"/>
 	<haxelib name="systools" if="cpp"/>
+	<haxelib name="hscript"/>
 	<ndll name="systools" haxelib="systools" if="cpp" />
+	<haxelib name="linc_luajit"/> <!--Implementing lua functionality into this so it'll be easier to modify. -->
 
 	<!-- ______________________________ Haxedefines _____________________________ -->
 
