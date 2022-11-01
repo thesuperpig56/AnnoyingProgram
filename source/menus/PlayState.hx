@@ -1,16 +1,16 @@
 package menus;
 
-import flixel.util.FlxTimer;
-import flixel.tweens.FlxTween;
-import internal.Transparency;
-import flixel.input.keyboard.FlxKey;
-import openfl.events.KeyboardEvent;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.ui.FlxUIState;
+import flixel.input.keyboard.FlxKey;
 import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
+import internal.Transparency;
+import openfl.events.KeyboardEvent;
 
 /**
  * This is the FlxState that is the main state that the window is on.
@@ -191,6 +191,9 @@ class PlayState extends FlxState
 		if (consoleActive) {
 			switch (consoleString)
 			{
+				case "popup":
+					bgText.text = "Console:\n\nCmd:> _\n\nCreating a window.";
+					internal.WindowManagement.create(); // lol.
 				case "force":
 					trace("forcing sprite");
 					shouldShow = 100;
