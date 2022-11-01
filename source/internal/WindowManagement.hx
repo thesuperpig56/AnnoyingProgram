@@ -12,13 +12,16 @@ import lime.ui.Window;
 import openfl.Lib;
 import openfl.display.Bitmap;
 import openfl.display.Sprite;
+import openfl.events.EventType;
 import openfl.geom.Matrix;
 import openfl.geom.Rectangle;
+import openfl.system.Capabilities;
 import openfl.utils.Assets;
 
 class WindowManagement
 {
     public static var windows:Array<FuckedWindow> = [];
+    public static var setup:Bool = false;
 
     public static function closeAllWindows() {
         var int:Int = 0;
@@ -32,9 +35,15 @@ class WindowManagement
 
     public static function create()
     {
-        var win:FuckedWindow = new FuckedWindow();
+        if (!setup)
+        {
+			lime.app.Application.current.onUpdate.add(update); // lol.
+        }
+        var win:FuckedWindow = new FuckedWindow(null, FlxG.random.int(0, Std.int(Capabilities.screenResolutionX / 2)), FlxG.random.int(0, Std.int(Capabilities.screenResolutionY / 2)));
         trace("scuff window creation");
     }
+
+    private static function update(elapsed:Int) { for (win in windows) win.onUpdate(elapsed); }
 }
 
 class FuckedWindow
@@ -56,6 +65,7 @@ class FuckedWindow
 		});
         if (customX == null) { customX = -10; }
         if (customY == null) { customY = Std.int(display.height * 0.37); }
+        trace("Window was created at [x: " + customX + ", y: " + customY + "]");
 		window.x = customX;
 		window.y = customY; // Std.int(display.height * 0.37);
 		window.stage.color = 0xFF010101;
@@ -71,6 +81,10 @@ class FuckedWindow
 		FlxG.drawFramerate = 60;
 		FlxG.updateFramerate = 60;
         WindowManagement.windows.push(this);
+    }
+
+    public function onUpdate(elapsed:Int) {
+        // trace("onUpdate [" + elapsed);
     }
 
     public function onClose():Void {

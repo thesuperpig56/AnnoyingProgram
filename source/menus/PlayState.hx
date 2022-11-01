@@ -235,7 +235,9 @@ class PlayState extends FlxState
 					Main.devVersion = false;
 					layout.FPS.fpsPrefix = "";
 					trace("Disabled developer mode.");
-				case "array.print": trace(Utilities.getAllImagesArray());
+				case "array.print":
+					trace(Utilities.getAllImagesArray());
+					bgText.text = "Console:\n\nCmd:> _\n\nPrinting array of files...";
 				case "": bgText.text = "Console:\n\nCmd:> _\n\nPlease enter a command.";
 				default: bgText.text = "Console:\n\nCmd:> _\n\nInvaild command. Please try again.";
 			}
