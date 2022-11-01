@@ -1,0 +1,15 @@
+{
+	"search.exclude": {
+		"export/**/*.hx": true
+	},
+	"[haxe]": {
+		"editor.bracketPairColorization.enabled": false,
+		"editor.formatOnSave": false,
+		"editor.formatOnPaste": true,
+		"editor.codeActionsOnSave": {
+			"source.sortImports": true
+		}
+	},
+	"haxe.enableExtendedIndentation": true,
+	"window.title": "${dirty}${activeEditorShort} | ${rootName} | (ﾉ◕ヮ◕)ﾉ*:・ﾟ✧"
+}
