@@ -42,7 +42,9 @@ class PlayState extends FlxState
 	// Lua required variables.
 	public static var instance:PlayState;
 	public var variables:Map<String, Dynamic> = new Map();
+	#if LUA_ENABLED
 	public var luaArray:Array<internal.LuaScript> = []; // hehe haha.
+	#end
     
 	override function create() {
         super.create();
@@ -68,7 +70,9 @@ class PlayState extends FlxState
 		Main.instance.fpsCounter.alpha = 0;
 		openfl.Lib.current.stage.window.borderless = true;
 
+		#if LUA_ENABLED
 		initLua();
+		#end
     }
 
 	var shouldShow:Int = 0;
@@ -83,10 +87,14 @@ class PlayState extends FlxState
 			}
 			else { shouldShow += 1; }
 		}
+		#if LUA_ENABLED
 		for (lua in luaArray) lua.call('onUpdate', []);
+		#end
 	}
 
+	#if LUA_ENABLED
 	private function initLua() { for (file in FileSystem.readDirectory("assets/scripts")) { if (file.endsWith(".lua")) { luaArray.push(new internal.LuaScript("assets/scripts/" + file));} } }
+	#end
 
 	private function onKeyPress(event:KeyboardEvent):Void {
 		var eventKey:FlxKey = event.keyCode;
@@ -235,15 +243,7 @@ class PlayState extends FlxState
 		}
 	}
 
-	function consoleBackspace()
-	{
-		if (consoleActive) {
-			if (consoleString.length != 0) {
-				consoleString = consoleString.substring(0, consoleString.length - 1);
-				consoleUpdateEvent();
-			}
-		}
-	}
+	function consoleBackspace() { if (consoleActive) if (consoleString.length != 0) consoleString = consoleString.substring(0, consoleString.length - 1); }
 
 	function consoleUpdateEvent() { if (consoleActive) { bgText.text = "Console:\n\nCmd:> " + consoleString + "_"; } }
 

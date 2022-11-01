@@ -41,6 +41,8 @@
 
 	<!-- NOTE: These assets will be embeded in order to not make it difficult.-->
 
+	<define name="LUA_ENABLED" if="FINAL"/>
+
 	<assets path="assets"/> <!-- REQUIRED FOR FLIXEL PRELOADER! -->
 	<assets path="assets/fonts" embed="true"/> <!-- This has to always be embeded. No matter what.-->
 	<assets path="assets/images" include="*.jpg" embed="true"/> <!-- embed type beat -->

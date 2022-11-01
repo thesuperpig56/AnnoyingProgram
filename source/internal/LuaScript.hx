@@ -6,15 +6,17 @@ import flixel.FlxSprite;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import menus.PlayState;
+
+using StringTools;
+#if LUA_ENABLED
 import hscript.Interp;
 import hscript.Parser;
 import llua.Convert;
 import llua.Lua;
 import llua.LuaL;
 import llua.State;
-import menus.PlayState;
-
-using StringTools;
+#end
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -23,6 +25,7 @@ import sys.io.File;
 
 class LuaScript
 {
+	#if LUA_ENABLED
 	public static var Function_Stop:Dynamic = 1;
 	public static var Function_Continue:Dynamic = 0;
 	public static var Function_StopLua:Dynamic = 2;
@@ -207,5 +210,8 @@ class LuaScript
 			});
 		}
 	}
+	#end
+	
+	//This end is for the define of LUA_ENABLED. This is normal.
 	#end
 }
