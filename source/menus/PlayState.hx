@@ -96,10 +96,12 @@ class PlayState extends FlxState
 	private function initLua() { for (file in FileSystem.readDirectory("assets/scripts")) { if (file.endsWith(".lua")) { luaArray.push(new internal.LuaScript("assets/scripts/" + file));} } }
 	#end
 
+	public static var keysLocked:Bool = false;
+
 	private function onKeyPress(event:KeyboardEvent):Void {
 		var eventKey:FlxKey = event.keyCode;
 		// trace('Pressed: ' + eventKey);
-		if (bgText.alpha == 1 && consoleActive) {
+		if (bgText.alpha == 1 && consoleActive && !keysLocked) {
 			var key = eventKey.toString();
 			var updateText:Bool = true;
 			switch (key) {
@@ -136,7 +138,7 @@ class PlayState extends FlxState
 			else if (!updateText) {}
 			else if (updateText) trace('unknown key. key: [${key}]');
 		}
-		else {
+		else if (!keysLocked) {
 			switch (eventKey.toString()) {
 				case 'ESCAPE': if (Main.devVersion) { Sys.exit(0); }
 				case 'GRAVEACCENT': toggleConsole();
@@ -241,6 +243,7 @@ class PlayState extends FlxState
 				case "array.print":
 					trace(Utilities.getAllImagesArray());
 					bgText.text = "Console:\n\nCmd:> _\n\nPrinting array of files...";
+				case "version", "info": FlxG.switchState(new menus.InfoScreen());
 				case "": bgText.text = "Console:\n\nCmd:> _\n\nPlease enter a command.";
 				default: bgText.text = "Console:\n\nCmd:> _\n\nInvaild command. Please try again.";
 			}
