@@ -1,16 +1,18 @@
 package;
 
-import menus.SetupScreen;
-import layout.FPS;
-import layout.Volume;
-import lime.graphics.Image;
-import flixel.util.FlxColor;
-import openfl.events.Event;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
-import openfl.display.Sprite;
+import flixel.util.FlxColor;
+import layout.FPS;
+import layout.Volume;
+import lime.app.Application;
+import lime.graphics.Image;
+import menus.SetupScreen;
 import openfl.Lib;
+import openfl.display.Sprite;
+import openfl.events.Event;
+import openfl.events.UncaughtErrorEvent;
 
 using StringTools;
 
@@ -60,6 +62,22 @@ class Main extends Sprite
 		#else
 		devVersion = false;
 		#end
+		// Setup arguments.
+		var args = Sys.args();
+		for (arg in args) {
+			switch (arg.toString()) {
+				case "-exitattempt":
+					trace("So the game was restarted because it was closed incorrectly.");
+					restartedGame = true;
+				case "-debug":
+					trace("Enabling dev version...");
+					Main.devVersion = true;
+					// layout.FPS.fpsPrefix = "DEV PREVIEW\n";
+				case "-livereload": trace("Why would you live reload when it's not supported!");
+				default: internal.IncorrectCounter.isThisIt(arg.toString()); // lol
+			}
+		}
+		
 		// HaxeFlixel creation into the OpenFL window.
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
@@ -92,22 +110,9 @@ class Main extends Sprite
 
 		setExitHandler(Utilities.onQuit);
 
-		var args = Sys.args();
-		for (arg in args)
-		{
-			switch (arg.toString())
-			{
-				case "-exitattempt":
-					trace("So the game was restarted because it was closed incorrectly.");
-					restartedGame = true;
-				case "-debug":
-					trace("Enabling dev version...");
-					Main.devVersion = true;
-					layout.FPS.fpsPrefix = "DEV PREVIEW\n";
-				case "-livereload":
-					trace("Why would you live reload when it's not supported!");
-			}
-		}
+		#if CRASH_HANDLER
+		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, internal.UhOh.onCrash);
+		#end
 
 		FlxG.autoPause = false;
 		FlxG.console.autoPause = false;

@@ -1,12 +1,12 @@
 package;
 
-import sys.FileSystem;
+import Sys;
 import flixel.FlxG;
+import internal.FlxTransWindow; // import.
 import lime.graphics.Image;
 import lime.utils.Assets;
 import openfl.display.BitmapData;
-import internal.FlxTransWindow; // import.
-import Sys;
+import sys.FileSystem;
 
 class Utilities
 {
@@ -60,6 +60,8 @@ class Utilities
 		var os = Sys.systemName();
 		var args = "-exitattempt";
         if (Main.devVersion) args += " -debug";
+        args += ' ' + internal.IncorrectCounter.counter;
+        trace("Next time it will open using argument: " + args);
 		var app = "";
 		var workingdir = Sys.getCwd();
 

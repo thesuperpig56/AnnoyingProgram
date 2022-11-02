@@ -212,6 +212,9 @@ class PlayState extends FlxState
 		if (consoleActive) {
 			switch (consoleString)
 			{
+				case "crash":
+					if (Main.devVersion) crashApplication();
+					else bgText.text = "Console:\n\nCmd:> _\n\nHA! You can't use this!\nDeveloper only!";
 				case "popup":
 					bgText.text = "Console:\n\nCmd:> _\n\nCreating a window.";
 					internal.WindowManagement.create(); // lol.
@@ -260,5 +263,14 @@ class PlayState extends FlxState
 		remove(sprite);
 		sprite = null;
 		spriteRunning = false;
+	}
+
+	// Debug functions.
+	function crashApplication()
+	{
+		var spr:FlxSprite = new FlxSprite();
+		spr.screenCenter();
+		spr.pixels = Utilities.getImagePixels("assets/image/crashattempt.jpg"); // lol
+		add(spr);
 	}
 }

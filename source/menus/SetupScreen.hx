@@ -1,12 +1,12 @@
 package menus;
 
-import flixel.tweens.FlxTween;
 import Utilities;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.ui.FlxUIState;
 import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 
 /**
@@ -26,7 +26,7 @@ class SetupScreen extends FlxState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(1, 1, 1));
 		add(bg);
         var text:String = "bye bye!";
-        if (Main.restartedGame) text = "nice try..";
+        if (Main.restartedGame) text = internal.IncorrectCounter.getNewText();
 		var txt:FlxText = new FlxText(0, 0, FlxG.width,
 			text, 32);
 		txt.setFormat("assets/fonts/SF-Pro.ttf", 32, FlxColor.WHITE, CENTER);
