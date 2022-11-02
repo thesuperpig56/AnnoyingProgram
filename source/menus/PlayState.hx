@@ -243,7 +243,7 @@ class PlayState extends FlxState
 				case "array.print":
 					trace(Utilities.getAllImagesArray());
 					bgText.text = "Console:\n\nCmd:> _\n\nPrinting array of files...";
-				case "version", "info": FlxG.switchState(new menus.InfoScreen());
+				case "ver", "version", "info": FlxG.switchState(new menus.InfoScreen());
 				case "": bgText.text = "Console:\n\nCmd:> _\n\nPlease enter a command.";
 				default: bgText.text = "Console:\n\nCmd:> _\n\nInvaild command. Please try again.";
 			}
