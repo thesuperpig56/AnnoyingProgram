@@ -19,7 +19,7 @@ class IncorrectCounter
     public static function getNewText():String {
         counter += 1;
         switch (counter) {
-            case 0: return "Bye bye!";
+            case 0: return "this message isnt supposed to show so haha hehe haha im so smart if this doesnt show up";
             case 1: return "Nice try.";
             case 2: return "Failed again huh?";
             case 3: return "Three times.\nAmazing how you failed.";
@@ -29,7 +29,7 @@ class IncorrectCounter
             case 7: return "Seven is too much now.";
             case 8: return "I am running out of ideas\nfor these dialogue messages.";
             case 9: return "Please actually close it next time correctly.";
-            case 50: return "ARE YOU BEING SERIOUS? HOW?";
+            case 50: return "You are so terrible.";
             case 51: return "I'll allow you to close it now. Go ahead.";
             case 52:
                 Utilities.allowedToClose = true;

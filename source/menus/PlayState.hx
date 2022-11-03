@@ -158,7 +158,7 @@ class PlayState extends FlxState
 			sprite.alpha = 0;
 			sprite.setGraphicSize(Std.int(sprite.width * 0.7), Std.int(sprite.height * 0.7));
 			sprite.screenCenter();
-			Utilities.setBackgroundTransparency(true); // fuck.
+			Utilities.setBackgroundTransparency(true);
 			add(sprite);
 			spriteTween = FlxTween.tween(sprite, {alpha: 1}, 1);
 			spriteTween.onComplete = countdownActiveTimer;
