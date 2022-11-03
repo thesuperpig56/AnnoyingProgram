@@ -150,12 +150,7 @@ class PlayState extends FlxState
 	private function onKeyRelease(event:KeyboardEvent):Void { var eventKey:FlxKey = event.keyCode; }
 
 	function randomlyDoSomething() {
-		if (FlxG.random.bool(30)) {
-			spriteRunning = false;
-			internal.WindowManagement.create(true, 'glitch');
-		} else {
-			showSprite(); // lol
-		}
+		showSprite();
 	}
 
 	// Actual stuff.
