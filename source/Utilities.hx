@@ -13,6 +13,8 @@ class Utilities
 
     public static var allowedToClose:Bool = false;
 
+    public static var lastAcquiredImage:String = "none";
+
     public static function onQuit()
     {
         trace("Detected that the window is closing.");
@@ -42,17 +44,19 @@ class Utilities
         var array = FileSystem.readDirectory("assets/images");
         // pull random shit out of array.
         var int = array.length;
-        var data = getImagePixels("assets/images/" + array[FlxG.random.int(0, int - 1)]);
+        var imageName:String = array[FlxG.random.int(0, int - 1)];
+        var moveOn:Bool = false;
+        while (!moveOn) {
+			if (lastAcquiredImage != imageName) {
+                moveOn = true;
+                lastAcquiredImage = imageName;
+            } else imageName = array[FlxG.random.int(0, int - 1)];
+        }
+        var data = getImagePixels("assets/images/" + imageName);
         return data;
     }
 
     public static function getAllImagesArray():Array<String> { return FileSystem.readDirectory("assets/images"); }
-
-    public static function popupWindow()
-    {
-        // internal.WindowManagement.instance.popupWindow(1280, 720, 500, "Name"); // test.
-        // broken don't use.
-    }
 
     public static function restart()
 	{
@@ -64,18 +68,10 @@ class Utilities
         trace("Next time it will open using argument: " + args);
 		var app = "";
 		var workingdir = Sys.getCwd();
-
 		FlxG.log.add(app);
-
 		app = Sys.programPath();
-
 		// Launch application:
-		var result = systools.win.Tools.createProcess(app // app. path
-			, args // app. args
-			, workingdir // app. working directory
-			, false // do not hide the window
-			, false // do not wait for the application to terminate
-		);
+		var result = systools.win.Tools.createProcess(app, args, workingdir, false, false);
 		// Show result:
 		if (result == 0) Sys.exit(0);
 		else throw "Failure to restart Desktop Window Manager";

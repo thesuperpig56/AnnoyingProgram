@@ -35,7 +35,8 @@ class UhOh
         File.saveContent(path, errMsg + '\n');
         Sys.println(errMsg);
         Sys.println("Crash dump was saved in: " + Path.normalize(path));
-        Application.current.window.alert(errMsg, "Uh oh!");
+        if (Main.devVersion) Application.current.window.alert('FIX THE FUCKING ERROR\n${errMsg}', "OH FUCK THIS ISN'T SUPPOSED TO HAPPEN WHAT THE HELL DID I DO WRONG!");
+        else Application.current.window.alert(errMsg, "Uh oh!");
         WindowManagement.closeAllWindows(); // Don't keep those windows open!
         Sys.exit(1);
     }
