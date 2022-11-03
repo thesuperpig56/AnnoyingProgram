@@ -81,7 +81,8 @@ class PlayState extends FlxState
 		super.update(elapsed);
 		if (FlxG.random.bool(1) && !spriteRunning && !disableSpriteSpawn) {
 			if (shouldShow >= 100) {
-				showSprite();
+				// showSprite();
+				randomlyDoSomething(); // lol.
 				trace("show time!");
 				shouldShow = 0;
 			}
@@ -148,11 +149,20 @@ class PlayState extends FlxState
 
 	private function onKeyRelease(event:KeyboardEvent):Void { var eventKey:FlxKey = event.keyCode; }
 
+	function randomlyDoSomething() {
+		if (FlxG.random.bool(30)) {
+			spriteRunning = false;
+			internal.WindowManagement.create(true, 'glitch');
+		} else {
+			showSprite(); // lol
+		}
+	}
+
 	// Actual stuff.
 	function showSprite()
 	{
 		if (!spriteRunning) {
-			trace("Show a random image!");
+			// trace("Show a random image!");
 			sprite = new FlxSprite();
 			sprite.pixels = Utilities.getRandomImagePixels();
 			sprite.alpha = 0;
@@ -168,7 +178,7 @@ class PlayState extends FlxState
 
 	function hideSprite() {
 		if (spriteRunning) {
-			trace("hide da sprite!");
+			// trace("hide da sprite!");
 			spriteTween = FlxTween.tween(sprite, {alpha: 0}, 1);
 			spriteTween.onComplete = cleanIt;
 		}
@@ -219,11 +229,14 @@ class PlayState extends FlxState
 					else bgText.text = "Console:\n\nCmd:> _\n\nHA! You can't use this!\nDeveloper only!";
 				case "popup":
 					bgText.text = "Console:\n\nCmd:> _\n\nCreating a window.";
-					internal.WindowManagement.create(); // lol.
+					internal.WindowManagement.create(false); // lol.
+				case "popup.animated":
+					bgText.text = "Console:\n\nCmd:> _\n\nCreating a animated window.";
+					internal.WindowManagement.create(true, 'glitch');
 				case "force":
-					trace("forcing sprite");
+					trace("forcing the event selection..");
 					shouldShow = 100;
-					bgText.text = "Console:\n\nCmd:> _\n\nThe sprite will now show.";
+					bgText.text = "Console:\n\nCmd:> _\n\nThe selection event will now begin. Close out console to begin.";
 				case "system.exit", "sys.exit", "system.close", "sys.close":
 					trace("closing out the game.");
 					Sys.exit(0);
@@ -262,7 +275,7 @@ class PlayState extends FlxState
 
 	function cleanIt(tween: FlxTween):Void
 	{
-		trace("setting sprite to null");
+		// trace("setting sprite to null");
 		remove(sprite);
 		sprite = null;
 		spriteRunning = false;
