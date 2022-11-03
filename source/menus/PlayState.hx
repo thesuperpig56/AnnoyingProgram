@@ -9,7 +9,6 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import internal.Transparency;
 import openfl.events.KeyboardEvent;
 import sys.FileSystem;
 
